@@ -5,3 +5,5 @@
 (when (file-exists-p dreamacs-personal-dir)
   (message "Loading personal configuration files in %s..." dreamacs-personal-dir)
   (mapc 'load (directory-files dreamacs-personal-dir 't "^[^#].*el$")))
+
+(put 'upcase-region 'disabled nil)
