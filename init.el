@@ -41,6 +41,7 @@
 
 (require-all-dreamacs '(
                         org
+                        rainbow-delimiters
                         ))
 
 (put 'upcase-region 'disabled nil)
