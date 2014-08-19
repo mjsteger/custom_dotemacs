@@ -5,6 +5,7 @@
 (when (file-exists-p dreamacs-personal-dir)
   (message "Loading personal configuration files in %s..." dreamacs-personal-dir)
   (mapc 'load (directory-files dreamacs-personal-dir 't "^[^#].*el$")))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -41,3 +42,5 @@
 (require-all-dreamacs '(
                         org
                         ))
+
+(put 'upcase-region 'disabled nil)

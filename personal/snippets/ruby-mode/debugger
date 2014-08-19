@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name : debugger
+# group : debugging
+# key: de
+# --
+require 'debugger'; debugger
