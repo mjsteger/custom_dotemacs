@@ -11,15 +11,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("/Users/michaelsteger/Dropbox/national/tickler.org" "/Users/michaelsteger/Dropbox/national/todo.org" "/Users/michaelsteger/Dropbox/national/notes.org" "/Users/michaelsteger/Dropbox/national/work.org" "~/dreamacs/modules/dreamacs-org.el")))
- '(rainbow-delimiters-depth-1-face ((t (:foreground "red"))))
+ '(global-rainbow-delimiters-mode t)
+ '(org-agenda-files (quote ("/Users/michaelsteger/Dropbox/national/tickler.org" "/Users/michaelsteger/Dropbox/national/todo.org" "/Users/michaelsteger/Dropbox/national/notes.org" "/Users/michaelsteger/Dropbox/national/work.org" "~/dreamacs/modules/dreamacs-org.el")) t)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "red2"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "green"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "violet"))))
  '(rainbow-delimiters-depth-4-face ((t (:foreground "orange"))))
  '(rainbow-delimiters-depth-5-face ((t (:foreground "brown"))))
- '(rainbow-delimiters-unmatched-face ((t (:foreground "alternateSelectedControlColor"))))
- )
- )
+ '(rainbow-delimiters-unmatched-face ((t (:foreground "purple2")))))
 
 (setq initial-scratch-message ";; Do you wrestle with dreams?
 ;; Do you contend with shadows?
