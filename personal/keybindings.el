@@ -3,7 +3,7 @@
 
 (global-set-key (kbd "C-c C-v") 'eshell)
 
-(global-set-key (kbd "C-c C-c") 'smex)
+(global-set-key (kbd "C-c C-g") 'smex)
 
 (global-set-key (kbd "C-c o") 'occur)
 
@@ -24,3 +24,5 @@
 
 (global-set-key (kbd "C-c i") 'yas/expand)
 (global-set-key (kbd "C-c f") 'fill-region)
+(global-set-key (kbd "M-p") 'previous-error)
+(global-set-key (kbd "M-n") 'next-error)

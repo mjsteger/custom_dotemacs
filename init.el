@@ -1,6 +1,13 @@
 (defvar dreamacs-personal-dir (expand-file-name "personal" "~/.emacs.d/"))
 
-(load "~/dreamacs/dotemacs")
+(setq dreamacs-personal-modules '(
+                                  org
+                                  ))
+
+(setq dreamacs-personal-configurationless-modules '())
+
+
+(load "~/play/dreamacs/dotemacs")
 
 (when (file-exists-p dreamacs-personal-dir)
   (message "Loading personal configuration files in %s..." dreamacs-personal-dir)
@@ -44,8 +51,24 @@
 (global-linum-mode -1)
 
 (require-all-dreamacs '(
-                        org
                         rainbow-delimiters
                         ))
 
 (put 'upcase-region 'disabled nil)
+(dreamacs-require-packages '(ample-theme unicode-fonts))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(hl-line ((t (:background "#323232"))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "red1"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "green4"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#268bd2"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "dark orchid"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "yellow3")))))
+
+(when (member "Inconsolata-g" (font-family-list))
+  (set-face-attribute 'default nil :font "Inconsolata-g"))
+
+(unicode-fonts-setup)
