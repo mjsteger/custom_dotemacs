@@ -3,10 +3,12 @@
 (setq dreamacs-personal-modules '(
                                   org
                                   clojure
+                                  rainbow-delimiters
                                   ))
 
 (setq dreamacs-personal-configurationless-modules '())
 
+(add-to-list 'load-path dreamacs-personal-dir)
 
 (load "~/play/dreamacs/dotemacs")
 
@@ -56,10 +58,6 @@
 
 (global-company-mode -1)
 (global-linum-mode -1)
-
-(require-all-dreamacs '(
-                        rainbow-delimiters
-                        ))
 
 (put 'upcase-region 'disabled nil)
 (dreamacs-require-packages '(ample-theme unicode-fonts))
