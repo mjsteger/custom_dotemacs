@@ -26,3 +26,4 @@
 (global-set-key (kbd "C-c f") 'fill-region)
 (global-set-key (kbd "M-p") 'previous-error)
 (global-set-key (kbd "M-n") 'next-error)
+(global-set-key (kbd "C-x f") 'fill-region)
