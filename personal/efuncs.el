@@ -27,3 +27,11 @@
   (insert (concat "steggy: " (format-time-string "%Y-%m-%d:"))))
 
 (global-set-key (kbd "C-x .") 'authorize-comment)
+
+
+
+(defun http-to-git-format-config ()
+  (interactive)
+  (save-excursion
+    (re-search-forward "url = https://github.com/\\(.*\\)" nil t)
+    (replace-match "url = git@github.com:\\1" nil nil)))
