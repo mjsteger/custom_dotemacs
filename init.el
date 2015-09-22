@@ -4,6 +4,7 @@
                                   org
                                   clojure
                                   rainbow-delimiters
+                                  editor
                                   ))
 
 (setq dreamacs-personal-configurationless-modules '())
