@@ -4,7 +4,7 @@
                                   org
                                   clojure
                                   rainbow-delimiters
-                                  editor
+                                  editor-tweaks
                                   ))
 
 (setq dreamacs-personal-configurationless-modules '())
@@ -68,3 +68,4 @@
   (set-face-attribute 'default nil :font "Inconsolata-g"))
 
 (unicode-fonts-setup)
+(put 'downcase-region 'disabled nil)
