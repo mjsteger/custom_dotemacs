@@ -26,18 +26,18 @@
  '(org-agenda-files
    (quote
     ("/Users/steggy/Dropbox/national/dropbox-notes.org" "/Users/steggy/Dropbox/national/google.org" "/Users/steggy/Dropbox/national/home.org" "/Users/steggy/Dropbox/national/work.org" "/Users/steggy/Dropbox/national/interesting.org" "/Users/steggy/Dropbox/national/notes.org" "/Users/steggy/Dropbox/national/todo.org" "/Users/steggy/Dropbox/national/tickler.org")))
- '(rainbow-delimiters-depth-1-face ((t (:foreground "red"))))
- '(rainbow-delimiters-depth-2-face ((t (:foreground "green"))))
- '(rainbow-delimiters-depth-3-face ((t (:foreground "violet"))))
- '(rainbow-delimiters-depth-4-face ((t (:foreground "orange"))))
- '(rainbow-delimiters-depth-5-face ((t (:foreground "brown"))))
- '(rainbow-delimiters-unmatched-face ((t (:foreground "alternateSelectedControlColor")))))
+ )
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(hl-line ((t (:background "#323232")))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "blue"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "green"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "violet"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "orange"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "brown")))))
 
 (setq initial-scratch-message ";; Do you wrestle with dreams?
 ;; Do you contend with shadows?
