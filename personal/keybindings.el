@@ -29,3 +29,11 @@
 (global-set-key (kbd "C-x f") 'fill-region)
 
 (global-set-key (kbd "C-c C-m") 'smex)
+
+; If I want to minimize emacs, I can click the button
+; But let's be honest I can't remember the last time I wanted to
+(global-set-key (kbd "C-z") nil)
+(global-set-key (kbd "C-c C-q") 'inf-ruby-switch-from-compilation)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "M-%") 'anzu-query-replace)
+(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)

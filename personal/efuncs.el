@@ -35,3 +35,67 @@
   (save-excursion
     (re-search-forward "url = https://github.com/\\(.*\\)" nil t)
     (replace-match "url = git@github.com:\\1" nil nil)))
+
+(defun reload-ruby-project ()
+  (interactive)
+  (when (-any-p (lambda (x) (string-match "lib" x)) (projectile-current-project-dirs))
+    (let ((path (concat "\""(projectile-project-root))))
+      (--each (list (concat path "lib\"") (concat path "test\"")) (comint-send-string (inf-ruby-proc) (concat "$LOAD_PATH << " it "if ($LOAD_PATH & ["it "]).empty?"
+
+                                                "\n")))))
+    (projectile-process-current-project-files (lambda (x) (when (string-match ".*\.rb" x)
+                                                          (ruby-load-file (concat (projectile-project-root) x)))
+                                              ))
+    )
+
+(eval-after-load 'robe
+  '(define-key robe-mode-map (kbd "C-c C-e") 'reload-ruby-project))
+
+(global-set-key (kbd "C-c C-r") 'ruby-send-region)
+
+(eval-after-load 'minitest
+  '(define-key compilation-mode-map (kbd "C-x C-q") 'inf-ruby-switch-from-compilation))
+
+(defun operate-on-file (filename func)
+  (with-temp-file filename
+    (insert-file-contents filename)
+    (funcall func)
+    (delete-trailing-whitespace)
+    ))
+
+
+(defun install-byebug ()
+  (interactive)
+  (operate-on-file (expand-file-name "Gemfile" (projectile-project-root))
+                   (lambda () (unless (re-search-forward "byebug" nil t)
+                                (progn
+                                  (goto-char (point-max))
+                                  (insert "\ngem 'byebug'")
+                                  ))))
+  (projectile-with-default-dir (projectile-project-root)
+    (shell-command "bundle"))
+  (message "Byebug Installed")
+  (insert "require 'byebug'; byebug"))
+
+
+(defun remove-byebug ()
+  (interactive)
+
+  (operate-on-file (expand-file-name "Gemfile" (projectile-project-root))
+                   (lambda () (replace-string "gem 'byebug'" "")))
+  (save-excursion
+    (projectile-with-default-dir (projectile-project-root)
+      (shell-command "bundle")))
+  (message "Byebug Removed"))
+
+(defun byebug-dwim ()
+  (interactive)
+  (with-temp-buffer
+    (insert-file-contents (expand-file-name "Gemfile" (projectile-project-root)))
+    (if (re-search-forward "byebug" nil t)
+        (remove-byebug)
+      (install-byebug))
+    ))
+
+(eval-after-load 'ruby-mode
+  '(define-key ruby-mode-map (kbd "C-c t") 'byebug-dwim))
