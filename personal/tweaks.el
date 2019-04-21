@@ -27,3 +27,6 @@
   (org-save-all-org-buffers))
 
 (advice-add 'org-agenda-redo :after #'fix-org-redo)
+
+; Lots of projects have spring, but I really never want to use it
+(setq rspec-use-spring-when-possible nil)

@@ -12,6 +12,7 @@
                 (lambda ()
                   (interactive)
                   (join-line -1)))
+
 (defun goto-line-with-feedback ()
   "Show line numbers temporarily, while prompting for the line number input"
   (interactive)
@@ -27,8 +28,6 @@
   (insert (concat "steggy: " (format-time-string "%Y-%m-%d:"))))
 
 (global-set-key (kbd "C-x .") 'authorize-comment)
-
-
 
 (defun http-to-git-format-config ()
   (interactive)
@@ -63,26 +62,26 @@
     (delete-trailing-whitespace)
     ))
 
+(defvar byebug-program-name "pry-byebug")
 
 (defun install-byebug ()
   (interactive)
   (operate-on-file (expand-file-name "Gemfile" (projectile-project-root))
-                   (lambda () (unless (re-search-forward "byebug" nil t)
+                   (lambda () (unless (re-search-forward byebug-program-name nil t)
                                 (progn
                                   (goto-char (point-max))
-                                  (insert "\ngem 'byebug'")
+                                  (insert (concat "\ngem" byebug-program-name))
                                   ))))
   (projectile-with-default-dir (projectile-project-root)
     (shell-command "bundle"))
   (message "Byebug Installed")
   (insert "require 'byebug'; byebug"))
 
-
 (defun remove-byebug ()
   (interactive)
 
   (operate-on-file (expand-file-name "Gemfile" (projectile-project-root))
-                   (lambda () (replace-string "gem 'byebug'" "")))
+                   (lambda () (replace-string (concat "gem" byebug-program-name ""))))
   (save-excursion
     (projectile-with-default-dir (projectile-project-root)
       (shell-command "bundle")))
@@ -92,10 +91,61 @@
   (interactive)
   (with-temp-buffer
     (insert-file-contents (expand-file-name "Gemfile" (projectile-project-root)))
-    (if (re-search-forward "byebug" nil t)
+    (if (re-search-forward byebug-program-name nil t)
         (remove-byebug)
       (install-byebug))
     ))
 
 (eval-after-load 'ruby-mode
   '(define-key ruby-mode-map (kbd "C-c t") 'byebug-dwim))
+
+
+(defun gen-ghe-link ()
+  (interactive)
+  (let* ((git-base (string-trim (shell-command-to-string "git rev-parse --show-toplevel")))
+         (ghe-url (string-trim (shell-command-to-string "git remote show -n origin|grep 'Fetch URL'|awk '{print $3}'|cut -f2 -d '@'|tr ':' '/'|sed 's/.git$//'")))
+         (fname (string-remove-prefix git-base (buffer-file-name)))
+         (line-no (line-number-at-pos))
+         (url (format "https://%s/blob/master%s#L%d" ghe-url fname line-no)))
+    (print url)
+    (kill-new url)))
+
+(defun github-for-source (use-current-branch)
+  (interactive "P")
+  (when-let
+      (containing-directory (expand-file-name (locate-dominating-file (buffer-file-name) "cloud")))
+    (let* ((regexp-match (s-match (concat containing-directory "\\([^/]+\\)/\\(.*\\)") (buffer-file-name)))
+           (project-name (cadr regexp-match))
+           (path (caddr regexp-match))
+           (current-line (cadr (s-split " " (what-line))))
+           (branch (if use-current-branch (magit-get-current-branch) "master"))
+           )
+
+      (kill-new (concat
+        "https://github.internal.digitalocean.com/digitalocean/"
+        project-name
+        "/blob/" branch "/"
+        path
+        "#L" current-line)))))
+
+(defun goto-current-tickler-day ()
+  (interactive)
+  (cl-multiple-value-bind (month day) (s-split " " (format-time-string "%B %d"))
+    (find-file (concat org-directory "/gtd/" "tickler/" month "/" (first (last (s-split "^0" day))) ".org"))
+    )
+  )
+
+(setq journal-template "* Things Jamie has done I appreciate
+** ")
+
+(defun goto-current-journal-day ()
+  (interactive)
+  (cl-multiple-value-bind (month day year) (s-split " " (format-time-string "%m %d %Y"))
+    (find-file (concat org-directory "/gtd/" "journal/" year "-" month "-" (first (last (s-split "^0" day))) ".org"))
+    (if (eq (buffer-size (current-buffer)) 0)
+        (insert journal-template))
+    )
+  )
+
+(global-set-key (kbd "C-c e") 'goto-current-tickler-day)
+(global-set-key (kbd "C-c z") 'goto-current-journal-day)
